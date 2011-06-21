@@ -212,8 +212,19 @@ export SCREENDIR=${HOME}/.screen
 #
 # Command
 #
-alias ls='ls -aFGw'
+case `uname` in
+Darwin*|FreeBSD*)
+  alias ls='ls -aFGw'
+  ;;
+Linux*)
+  alias ls='ls -aF --color'
+  ;;
+esac
+
 alias ll='ls -l'
+alias du='du -h'
+alias df='df -h'
+
 alias view='vim -R'
 alias rm='rm -i'
 alias gr="grep -rn --color --exclude='*.svn*' --exclude='*.swp' --exclude='*.o' --exclude='*.so' --exclude-dir='.svn'"
