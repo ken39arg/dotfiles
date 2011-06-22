@@ -1,0 +1,17 @@
+escape ^J^J
+defscrollback 5000
+screstartup_message off
+vbell off
+caption always "%{= wb} %-w%{=bu dr}%n %t%{-}%+w %= %{=b wk} [%l] %{=b kw} %m/%d %{=b kw}%c"
+# caption always "%{= wb} %-w%{=bu dr}%n %t%{-}%+w %= %{=b wk} [%l] %{=b wb}%y/%m/%d(%D) %{=b wm}%c"
+termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+termcapinfo xterm* ti@:te@
+altscreen on
+
+shell /bin/zsh
+
+screen -t vim 0 
+screen -t zsh1 1
+screen -t zsh2 2
+screen -t mysql 3 
+screen -t log 4 

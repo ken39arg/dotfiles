@@ -1,0 +1,8 @@
+.vimrc.local
+.tags
+.svn
+.DS_Store
+*.swp
+*.swo
+.excludes
+.vim/bundle/*
