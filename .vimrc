@@ -40,6 +40,10 @@ set vb t_vb=
 set autoindent
 :set modeline
 
+" タブ文字可視化
+set list
+set listchars=tab:>\ 
+
 " call pathogen#runtime_append_all_bundles()
 
 set statusline=%F%m%r%h%w\ %{&fileencoding}\ %{&fileformat}\ [%l/%L,\ %v]
