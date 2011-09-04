@@ -227,7 +227,7 @@ alias df='df -h'
 
 alias view='vim -R'
 alias rm='rm -i'
-alias gr="grep -rn --color --exclude='*.svn*' --exclude='*.swp' --exclude='*.o' --exclude='*.so' --exclude-dir='.svn'"
+alias gr="grep -rn --color --exclude='*.svn*' --exclude='*.swp' --exclude='*.o' --exclude='*.so' --exclude='.svn'"
 
 alias sf='php ./symfony --color'
 

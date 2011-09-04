@@ -182,3 +182,21 @@ set wildmode=list:longest,full
 
 set splitright
 set splitbelow
+
+" {{{ inflect_pluralize
+if !exists('g:inflect_pluralize_cmd')
+  let g:inflect_pluralize_cmd = "perl -MLingua::EN::Inflect=PL -E 'print PL(\"%s\")'"
+endif
+
+function! s:inflect_pluralize(word)
+  return system(substitute(g:inflect_pluralize_cmd, "%s", a:word, "g"))
+endfunction
+
+function! s:insert_(v)
+  execute "normal i" . a:v ."\<Esc>"
+  echo a:v
+endfunction
+
+command! -nargs=1 PL  echo s:inflect_pluralize(<q-args>)
+command! -nargs=1 PLI call s:insert_(s:inflect_pluralize(<q-args>))
+" }}}
