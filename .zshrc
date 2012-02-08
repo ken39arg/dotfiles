@@ -232,7 +232,8 @@ alias gr="grep -rn --color --exclude='*.svn*' --exclude='*.swp' --exclude='*.o' 
 alias sf='php ./symfony --color'
 
 alias diff='colordiff'
-alias svndiff='svn diff --diff-cmd colordiff'
+
+alias vimclean='find * -name "*.swp" | xargs rm && find * -name "*\~" | xargs rm'
 
 #
 # my selection
@@ -258,6 +259,16 @@ function svnadd()
 function qr_url()
 {
   php -r 'echo "http://chart.apis.google.com/chart?chs=150x150&cht=qr&chl=".urlencode($argv[1]).PHP_EOL;' $1
+}
+
+function PL()
+{
+  perl -MLingua::EN::Inflect=PL -E 'say PL($ARGV[0])' $1
+}
+
+function sgrep()
+{
+  grep -rn `echo $1 | nkf -s` $2 | nkf -w
 }
 
 #

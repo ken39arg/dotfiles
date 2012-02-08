@@ -10,9 +10,4 @@ altscreen on
 
 shell /bin/zsh
 
-screen -t vim 0 
-screen -t zsh1 1
-screen -t zsh2 2
-screen -t mysql 3 
-screen -t log 4 
-select 0 
+source .screenrc.local
