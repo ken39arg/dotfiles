@@ -2,6 +2,7 @@
 export EDITOR=vim
 export SVN_EDITOR=vim
 export LANG=ja_JP.UTF-8
+export SHELL=/bin/zsh
 
 # 単語として認識したい文字
 export WORDCHARS='*?-[]~¥!#%^(){}<>|`@#%^*()+:?'
@@ -178,10 +179,17 @@ zstyle ':completion:*' menu select=1
 ##  <- これエスケープ {C-v ESC}
 ##
 
-#PROMPT='%{[32m%}%B%U%n@%m%#%{[m%}%u%b '
-#PROMPT='%{[33m%}%B%n@%m%#%{[m%}%b '
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '[%b]'
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () {
+    psvar=()
+    vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
 PROMPT='%{[33m%}%B%n%#%{[m%}%b '
-RPROMPT='%{[33m%}%B[%60<..<%~]%{[m%}%b'
+#RPROMPT='%{[33m%}%B[%60<..<%~]%{[m%}%b'
+RPROMPT="%1(v|%F{green}%1v%f|)"'%{[33m%}%B[%60<..<%~]%{[m%}%b'
 SPROMPT='%{[34m%} %BCurrenct> '¥''%r'¥'' [Yes, No, Abort, Edit]%{[m%}%b '
 
 # autoload
@@ -233,7 +241,10 @@ alias sf='php ./symfony --color'
 
 alias diff='colordiff'
 
-alias vimclean='find * -name "*.swp" | xargs rm && find * -name "*\~" | xargs rm'
+alias vimclean='find . -name "*.swp" | xargs rm && find . -name "*\~" | xargs rm'
+
+alias gitc=`which git`
+alias git='nocorrect git'
 
 #
 # my selection
@@ -271,9 +282,14 @@ function sgrep()
   grep -rn `echo $1 | nkf -s` $2 | nkf -w
 }
 
+
 #
 # 環境別ファイルの読み込み
 #
 if [ -f ~/.zshrc.local ]; then
 	source ~/.zshrc.local 
+fi
+
+if [[ -s $HOME/.rvm/scripts/rvm ]] then
+  source $HOME/.rvm/scripts/rvm
 fi

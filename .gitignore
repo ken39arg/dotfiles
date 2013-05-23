@@ -6,3 +6,4 @@
 *.swo
 .excludes
 .vim/bundle/*
+.proverc
