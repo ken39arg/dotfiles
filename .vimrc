@@ -1,25 +1,44 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/vundle/
-call vundle#rc()
+if has('vim_starting')
+   set runtimepath+=~/.vim/neobundle.vim/
+endif
+
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+" NeoBundleFetch 'Shougo/neobundle.vim'
 
 " vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'php-doc'
-Bundle 'AutoComplPop'
+NeoBundle 'L9'
+NeoBundle 'FuzzyFinder'
+" Bundle 'php-doc'
+NeoBundle 'AutoComplPop'
+NeoBundle 'Gist.vim'
+" Bundle 'actionscript.vim--Cuss'
 
 " git hub
-Bundle 'thinca/vim-ref'
-Bundle 'thinca/vim-quickrun'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/unite.vim'
-Bundle 'soh335/vim-symfony'
-Bundle 'basyura/jslint.vim'
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/unite.vim'
+" Bundle 'soh335/vim-symfony'
+NeoBundle 'basyura/jslint.vim'
+NeoBundle 'epmatsw/ag.vim'
+NeoBundle 'tpope/vim-dispatch'
 
+
+NeoBundleLazy 'nosami/Omnisharp', {
+\     'autoload': {'filetypes': ['cs']},
+\     'build': {
+\         'mac': 'xbuild server/OmniSharp.sln',
+\         'unix': 'xbuild server/OmniSharp.sln',
+\     }
+\ }
 
 " end bundle
+
+filetype plugin indent on
 
 if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
    set fileencodings=utf-8,latin1
@@ -33,7 +52,7 @@ set viminfo='20,\"50    " read/write a .viminfo file, don't store more
                         " than 50 lines of registers
 set history=50          " keep 50 lines of command line history
 set ruler               " show the cursor position all the time
-set tabstop=2
+set tabstop=4
 set expandtab
 set noerrorbells
 set vb t_vb=
@@ -142,14 +161,19 @@ let g:fuf_mrufile_maxItem = 100
 let g:fuf_enumeratingLimit = 20
 let g:fuf_file_exclude = '\v\.DS_Store|\.git|\.swp|\.svn'
 let g:acp_enableAtStartup = 0
+let g:fuf_keyOpen = '<CR>'
+let g:fuf_keyOpenSplit = '<C-s>'
+let g:fuf_keyOpenVsplit = '<C-v>'
+let g:fuf_keyOpenTabpage = '<C-t>'
+let g:fuf_keyNextMode = '<C-n>'
 
 "{{{ symfony.vim map
-nnoremap <silent><space>sv :<C-u>Sview<CR>
-nnoremap <silent><space>sa :<C-u>Saction<CR>
-nnoremap <silent><space>sm :<C-u>Smodel<CR>
-nnoremap <silent><space>sp :<C-u>Spartial<CR>
-nnoremap <silent><space>sc :<C-u>Scomponent<CR>
-noremap <buffer><space>cc :Symfony cc<CR>
+" nnoremap <silent><space>sv :<C-u>Sview<CR>
+" nnoremap <silent><space>sa :<C-u>Saction<CR>
+" nnoremap <silent><space>sm :<C-u>Smodel<CR>
+" nnoremap <silent><space>sp :<C-u>Spartial<CR>
+" nnoremap <silent><space>sc :<C-u>Scomponent<CR>
+" noremap <buffer><space>cc :Symfony cc<CR>
 
 " yaml.vim
 " au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/script/yaml.vim
@@ -171,13 +195,13 @@ endfunction
 
 " php-doc.vim
 " Default values
-let g:pdv_cfg_Package = ""
-let g:pdv_cfg_Version = "$Id$"
-let g:pdv_cfg_Author  = "Kensaku Araga <ken39arg@gmail.com>"
-let g:pdv_cfg_Copyright = ""
-inoremap <C-D> <ESC>:call PhpDocSingle()<CR>i
-nnoremap <C-D> :call PhpDocSingle()<CR>
-vnoremap <C-D> :call PhpDocRange()<CR>
+" let g:pdv_cfg_Package = ""
+" let g:pdv_cfg_Version = "$Id$"
+" let g:pdv_cfg_Author  = "Kensaku Araga <ken39arg@gmail.com>"
+" let g:pdv_cfg_Copyright = ""
+" inoremap <C-D> <ESC>:call PhpDocSingle()<CR>i
+" nnoremap <C-D> :call PhpDocSingle()<CR>
+" vnoremap <C-D> :call PhpDocRange()<CR>
 
 let g:ref_phpmanual_path = $HOME .'/Documents/phpmanual'
 set wildmode=list:longest,full
@@ -215,3 +239,7 @@ function! s:javascript_filetype_settings()
   autocmd CursorMoved  <buffer> call jslint#message()
 endfunction
 " }}}
+
+autocmd BufNewFile,BufRead *.as set filetype=actionscript
+
+" let g:neocomplcache_enable_at_startup = 1
