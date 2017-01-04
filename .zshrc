@@ -293,3 +293,11 @@ fi
 if [[ -s $HOME/.rvm/scripts/rvm ]] then
   source $HOME/.rvm/scripts/rvm
 fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export GOPATH=$HOME/go
+export GOROOT=$( go env GOROOT )
+export PATH=$GOPATH/bin:$PATH
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
