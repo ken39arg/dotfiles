@@ -1,42 +1,35 @@
 set nocompatible
 filetype off
 
-if has('vim_starting')
-   set runtimepath+=~/.vim/neobundle.vim/
+if 0 | endif
+
+if &compatible
+  set nocompatible               " Be iMproved
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+" Plug
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+call plug#begin('~/.vim/plugged')
+    Plug 'thinca/vim-ref'
+    Plug 'thinca/vim-quickrun'
+    " Plug 'Shougo/neocomplete.vim'
+    " Plug 'basyura/jslint.vim'
+    " Plug 'epmatsw/ag.vim'
+    Plug 'h1mesuke/vim-alignta'
+    Plug 'fatih/vim-go', { 'tag': '*' }
+    " Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
+call plug#end()
 
-" NeoBundleFetch 'Shougo/neobundle.vim'
+" NeoBundleLazy 'nosami/Omnisharp', {
+" \     'autoload': {'filetypes': ['cs']},
+" \     'build': {
+" \         'mac': 'xbuild server/OmniSharp.sln',
+" \         'unix': 'xbuild server/OmniSharp.sln',
+" \     }
+" \ }
 
-" vim-scripts repos
-NeoBundle 'L9'
-NeoBundle 'FuzzyFinder'
-" Bundle 'php-doc'
-NeoBundle 'AutoComplPop'
-NeoBundle 'Gist.vim'
-" Bundle 'actionscript.vim--Cuss'
-
-" git hub
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/unite.vim'
-" Bundle 'soh335/vim-symfony'
-NeoBundle 'basyura/jslint.vim'
-NeoBundle 'epmatsw/ag.vim'
-NeoBundle 'tpope/vim-dispatch'
-
-
-NeoBundleLazy 'nosami/Omnisharp', {
-\     'autoload': {'filetypes': ['cs']},
-\     'build': {
-\         'mac': 'xbuild server/OmniSharp.sln',
-\         'unix': 'xbuild server/OmniSharp.sln',
-\     }
-\ }
-
-" end bundle
 
 filetype plugin indent on
 
@@ -53,6 +46,7 @@ set viminfo='20,\"50    " read/write a .viminfo file, don't store more
 set history=50          " keep 50 lines of command line history
 set ruler               " show the cursor position all the time
 set tabstop=4
+set shiftwidth=4
 set expandtab
 set noerrorbells
 set vb t_vb=
@@ -62,14 +56,14 @@ set autoindent
 
 " タブ文字可視化
 set list
-set listchars=tab:>\ 
+set listchars=tab:>\
 hi SpecialKey guibg=NONE guifg=Gray ctermfg=darkgray
 
 " call pathogen#runtime_append_all_bundles()
 
 set statusline=%F%m%r%h%w\ %{&fileencoding}\ %{&fileformat}\ [%l/%L,\ %v]
 "set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-set laststatus=2 
+set laststatus=2
 
 " Only do this part when compiled with support for autocommands
 if has("autocmd")
@@ -80,31 +74,11 @@ if has("autocmd")
   \ if line("'\"") > 0 && line ("'\"") <= line("$") |
   \   exe "normal! g'\"" |
   \ endif
-  autocmd FileType php :set dictionary+=~/.vim/PHP.dict
-  " autocmd filetype php :set tags+=~/.vim/tags/symfony.tags
 
-  autocmd Filetype php set makeprg=php\ -l\ %
-  autocmd Filetype php set errorformat=%m\ in\ %f\ on\ line\ %l
-  
   hi Pmenu ctermfg=Black ctermbg=Grey
   hi PmenuSel ctermbg=Blue
   hi PmenuSbar ctermbg=Cyan
 
-endif
-
-if has("cscope")
-   set csprg=/usr/bin/cscope
-   set csto=0
-   set cst
-   set nocsverb
-   " add any database in current directory
-   if filereadable("cscope.out")
-      cs add cscope.out
-   " else add database pointed to by environment
-   elseif $CSCOPE_DB != ""
-      cs add $CSCOPE_DB
-   endif
-   set csverb
 endif
 
 " Switch syntax highlighting on, when the terminal has colors
@@ -125,7 +99,7 @@ nmap j gj
 nmap k gk
 vmap j gj
 vmap k gk
- 
+
 nmap n nzz
 nmap N Nzz
 
@@ -139,9 +113,9 @@ command! Utf8 e ++enc=utf-8
 command! Euc e ++enc=euc-jp
 command! Sjis e ++enc=cp932
 command! Jis e ++enc=iso-2022-jp
-command! WUtf8 w ++enc=utf-8 | e 
-command! WEuc w ++enc=euc-jp | e 
-command! WSjis w ++enc=cp932 | e 
+command! WUtf8 w ++enc=utf-8 | e
+command! WEuc w ++enc=euc-jp | e
+command! WSjis w ++enc=cp932 | e
 command! WJis w ++enc=iso-2022-jp | e
 
 " fuzzy finder plugin
@@ -149,34 +123,25 @@ command! WJis w ++enc=iso-2022-jp | e
 " nnoremap <silent> <Space>fm :<C-u>FuzzyFinderMruFile<Cr>
 " nnoremap <silent> <Space>fb :<C-u>FuzzyFinderBuffer<Cr>
 " let g:FuzzyFinderOptions = { 'Base':{}, 'Buffer':{}, 'File':{}, 'Dir':{}, 'MruFile':{}, 'MruCmd':{}, 'Bookmark':{}, 'Tag':{}, 'TaggedFile':{}}
-nnoremap <unique> <silent> <space>fb :FufBuffer!<CR>
-nnoremap <unique> <silent> <space>ff :FufFile!<CR>
-nnoremap <unique> <silent> <space>fm :FufMruFile!<CR>
-nnoremap <unique> <silent> <Space>fc :FufRenewCache<CR>
-autocmd FileType fuf nmap <C-c> <ESC>
-let g:fuf_patternSeparator = ' '
-let g:fuf_modesDisable = ['mrucmd']
-let g:fuf_mrufile_exclude = '\v\.DS_Store|\.git|\.swp|\.svn'
-let g:fuf_mrufile_maxItem = 100
-let g:fuf_enumeratingLimit = 20
-let g:fuf_file_exclude = '\v\.DS_Store|\.git|\.swp|\.svn'
-let g:acp_enableAtStartup = 0
-let g:fuf_keyOpen = '<CR>'
-let g:fuf_keyOpenSplit = '<C-s>'
-let g:fuf_keyOpenVsplit = '<C-v>'
-let g:fuf_keyOpenTabpage = '<C-t>'
-let g:fuf_keyNextMode = '<C-n>'
-
-"{{{ symfony.vim map
-" nnoremap <silent><space>sv :<C-u>Sview<CR>
-" nnoremap <silent><space>sa :<C-u>Saction<CR>
-" nnoremap <silent><space>sm :<C-u>Smodel<CR>
-" nnoremap <silent><space>sp :<C-u>Spartial<CR>
-" nnoremap <silent><space>sc :<C-u>Scomponent<CR>
-" noremap <buffer><space>cc :Symfony cc<CR>
+" nnoremap <unique> <silent> <space>fb :FufBuffer!<CR>
+" nnoremap <unique> <silent> <space>ff :FufFile!<CR>
+" nnoremap <unique> <silent> <space>fm :FufMruFile!<CR>
+" nnoremap <unique> <silent> <Space>fc :FufRenewCache<CR>
+" autocmd FileType fuf nmap <C-c> <ESC>
+" let g:fuf_patternSeparator = ' '
+" let g:fuf_modesDisable = ['mrucmd']
+" let g:fuf_mrufile_exclude = '\v\.DS_Store|\.git|\.swp|\.svn'
+" let g:fuf_mrufile_maxItem = 100
+" let g:fuf_enumeratingLimit = 20
+" let g:fuf_file_exclude = '\v\.DS_Store|\.git|\.swp|\.svn'
+" let g:acp_enableAtStartup = 0
+" let g:fuf_keyOpen = '<CR>'
+" let g:fuf_keyOpenSplit = '<C-s>'
+" let g:fuf_keyOpenVsplit = '<C-v>'
+" let g:fuf_keyOpenTabpage = '<C-t>'
+" let g:fuf_keyNextMode = '<C-n>'
 
 " yaml.vim
-" au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/script/yaml.vim
 au FileType yaml setlocal expandtab ts=2 sw=2 enc=utf-8 fenc=utf-8
 
 " {{{ 場所ごとの設定
@@ -193,17 +158,6 @@ function! s:vimrc_local(loc)
 endfunction
 " }}}
 
-" php-doc.vim
-" Default values
-" let g:pdv_cfg_Package = ""
-" let g:pdv_cfg_Version = "$Id$"
-" let g:pdv_cfg_Author  = "Kensaku Araga <ken39arg@gmail.com>"
-" let g:pdv_cfg_Copyright = ""
-" inoremap <C-D> <ESC>:call PhpDocSingle()<CR>i
-" nnoremap <C-D> :call PhpDocSingle()<CR>
-" vnoremap <C-D> :call PhpDocRange()<CR>
-
-let g:ref_phpmanual_path = $HOME .'/Documents/phpmanual'
 set wildmode=list:longest,full
 
 set splitright
@@ -228,18 +182,27 @@ command! -nargs=1 PLI call s:insert_(s:inflect_pluralize(<q-args>))
 " }}}
 
 " {{{ jslint.vim
-augroup MyGroup
-  autocmd! MyGroup
-  autocmd FileType javascript call s:javascript_filetype_settings()
-augroup END
-
-function! s:javascript_filetype_settings()
-  autocmd BufLeave     <buffer> call jslint#clear()
-  autocmd BufWritePost <buffer> call jslint#check()
-  autocmd CursorMoved  <buffer> call jslint#message()
-endfunction
+" augroup MyGroup
+"   autocmd! MyGroup
+"   autocmd FileType javascript call s:javascript_filetype_settings()
+" augroup END
+"
+" function! s:javascript_filetype_settings()
+"   autocmd BufLeave     <buffer> call jslint#clear()
+"   autocmd BufWritePost <buffer> call jslint#check()
+"   autocmd CursorMoved  <buffer> call jslint#message()
+" endfunction
 " }}}
 
-autocmd BufNewFile,BufRead *.as set filetype=actionscript
 
-" let g:neocomplcache_enable_at_startup = 1
+" vim-go
+"" mapping
+"" highlight
+let g:go_hightlight_functions = 1
+let g:go_hightlight_methods = 1
+let g:go_hightlight_structs = 1
+let g:go_hightlight_interfaces = 1
+let g:go_hightlight_operators = 1
+let g:go_hightlight_build_constraints = 1
+"" GoFmt時にインポートするパッケージを整理(GoFmtはファイル書き込み時に自動的に実行される)
+let g:go_fmt_command = "goimports"
