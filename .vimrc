@@ -16,10 +16,18 @@ call plug#begin('~/.vim/plugged')
     " Plug 'basyura/jslint.vim'
     " Plug 'epmatsw/ag.vim'
     Plug 'h1mesuke/vim-alignta'
-    Plug 'fatih/vim-go', { 'tag': '*' }
+    Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
     " Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
+    Plug 'plasticboy/vim-markdown'
+    Plug 'kannokanno/previm'
+    Plug 'tyru/open-browser.vim'
+    Plug 'uarun/vim-protobuf'
+    " Plug 'rdunklau/vim-perltidy'
+    Plug 'w0rp/ale'
+    Plug 'google/vim-jsonnet'
+    Plug 'posva/vim-vue'
 call plug#end()
 
 " NeoBundleLazy 'nosami/Omnisharp', {
@@ -56,7 +64,7 @@ set autoindent
 
 " タブ文字可視化
 set list
-set listchars=tab:>\
+set listchars=tab:>\ 
 hi SpecialKey guibg=NONE guifg=Gray ctermfg=darkgray
 
 " call pathogen#runtime_append_all_bundles()
@@ -141,6 +149,9 @@ command! WJis w ++enc=iso-2022-jp | e
 " let g:fuf_keyOpenTabpage = '<C-t>'
 " let g:fuf_keyNextMode = '<C-n>'
 
+nnoremap <silent> <Space>ff :FZF<CR>
+nnoremap <silent> <Space>ag :Ag<CR>
+
 " yaml.vim
 au FileType yaml setlocal expandtab ts=2 sw=2 enc=utf-8 fenc=utf-8
 
@@ -205,4 +216,11 @@ let g:go_hightlight_interfaces = 1
 let g:go_hightlight_operators = 1
 let g:go_hightlight_build_constraints = 1
 "" GoFmt時にインポートするパッケージを整理(GoFmtはファイル書き込み時に自動的に実行される)
-let g:go_fmt_command = "goimports"
+" let g:go_fmt_command = "goimports"
+let g:go_gopls_enabled = 1
+" 調子が悪いときは gopls -listen=:37374 -logfile=auto -debug=:0
+" でデーモン起動して下記を設定してそれを使うようにするとログが見れる
+" let g:go_gopls_options = ['-remote=:37374', '-logfile=auto', '-debug=:0', '-rpc.trace']
+
+autocmd BufRead,BufNewFile *.faced setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab fileformat=unix encoding=utf-8
+let g:vim_markdown_folding_disabled = 1

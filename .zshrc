@@ -301,3 +301,4 @@ export GOROOT=$( go env GOROOT )
 export PATH=$GOPATH/bin:$PATH
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(direnv hook zsh)"
