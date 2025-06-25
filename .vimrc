@@ -15,7 +15,8 @@ call plug#begin('~/.vim/plugged')
     " Plug 'Shougo/neocomplete.vim'
     " Plug 'basyura/jslint.vim'
     " Plug 'epmatsw/ag.vim'
-    Plug 'h1mesuke/vim-alignta'
+    " Plug 'h1mesuke/vim-alignta'
+    Plug 'vim-scripts/Align'
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
     " Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -25,9 +26,12 @@ call plug#begin('~/.vim/plugged')
     Plug 'tyru/open-browser.vim'
     Plug 'uarun/vim-protobuf'
     " Plug 'rdunklau/vim-perltidy'
-    Plug 'w0rp/ale'
+    " Plug 'w0rp/ale'
     Plug 'google/vim-jsonnet'
     Plug 'posva/vim-vue'
+    Plug 'rust-lang/rust.vim'
+    Plug 'github/copilot.vim'
+    Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 " NeoBundleLazy 'nosami/Omnisharp', {

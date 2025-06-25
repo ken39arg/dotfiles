@@ -237,8 +237,6 @@ alias view='vim -R'
 alias rm='rm -i'
 alias gr="grep -rn --color --exclude='*.svn*' --exclude='*.swp' --exclude='*.o' --exclude='*.so' --exclude='.svn'"
 
-alias sf='php ./symfony --color'
-
 alias diff='colordiff'
 
 alias vimclean='find . -name "*.swp" | xargs rm && find . -name "*\~" | xargs rm'
@@ -249,33 +247,6 @@ alias git='nocorrect git'
 #
 # my selection
 #
-
-function zen2han()
-{
-  php -r 'file_put_contents($argv[1], mb_convert_kana(file_get_contents($argv[1]), "rk", "utf-8"));' $1
-}
-function json_dump()
-{
-  php -r 'print_r(json_decode(file_get_contents($argv[1]), true));' $1
-}
-
-function svnadd-test()
-{
-  svn st $* | grep '?' | awk '{print $2}'
-}
-function svnadd()
-{
-  svn st $* | grep '?' | awk '{print $2}' | xargs svn add
-}
-function qr_url()
-{
-  php -r 'echo "http://chart.apis.google.com/chart?chs=150x150&cht=qr&chl=".urlencode($argv[1]).PHP_EOL;' $1
-}
-
-function PL()
-{
-  perl -MLingua::EN::Inflect=PL -E 'say PL($ARGV[0])' $1
-}
 
 function sgrep()
 {
@@ -294,11 +265,23 @@ if [[ -s $HOME/.rvm/scripts/rvm ]] then
   source $HOME/.rvm/scripts/rvm
 fi
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 export GOPATH=$HOME/go
-export GOROOT=$( go env GOROOT )
 export PATH=$GOPATH/bin:$PATH
+export GOROOT=$(go env GOROOT)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(direnv hook zsh)"
+
+ghq-jump() {
+    local selected_dir=$(ghq list -p | fzf --height=20 --layout=reverse --border --black)
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N ghq-jump
+bindkey '^]' ghq-jump
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
